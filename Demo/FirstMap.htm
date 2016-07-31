@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>第一个高德地图示例</title>
+    <!--1、引入高德地图JavaScript API文件:key=您申请的key值-->
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=a05eaf4c98fdd39755fb9e7767376fd6"></script>
+    <!--3、指定容器大小-->
+    <style>
+        #container {
+            width: 1000px;
+            height: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <!--2、在页面body里你想展示地图的地方创建一个div 容器，并指定id标识:-->
+    <div id="container"></div>
+    <script>
+        var centerLngLat = [116.449884,39.995724];
+    
+        // 创建地图
+    
+        var map = new AMap.Map("container",{
+            zoom:10,
+            center:centerLngLat //center属性的值可以使经纬度的二元数组，也可以是AMap.LngLat对象，要求经度值在前，纬度值在后
+        });
+
+    // map.setZoom(10);
+    // map.setCenter([116.39,39.9]);
+
+//添加标记点Mark
+var mark = new AMap.Marker({
+    position:centerLngLat,
+    map:map
+});
+ 
+   </script>
+</body>
+
+</html>
