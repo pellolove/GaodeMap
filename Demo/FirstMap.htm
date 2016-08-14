@@ -24,7 +24,7 @@
         // 创建地图
     
         var map = new AMap.Map("container",{
-            zoom:10,
+            zoom:15,
             center:centerLngLat //center属性的值可以使经纬度的二元数组，也可以是AMap.LngLat对象，要求经度值在前，纬度值在后
         });
 
@@ -34,7 +34,11 @@
 //添加标记点Mark
 var mark = new AMap.Marker({
     position:centerLngLat,
-    map:map
+    map:map,
+    strokeColor: "#00A",  //线颜色
+    strokeOpacity: 1,     //线透明度
+    strokeWeight: 3,      //线宽
+    strokeStyle: "solid"  //线样式
 });
  
    </script>

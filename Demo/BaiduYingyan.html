@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		通过百度鹰眼得到坐标展示在高德地图（要有坐标系统转换 ）
+	</title>
+	 <style>
+        #container {
+            width: 1000px;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+
+</div>
+	
+<script  type="text/javascript" src="http://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
+   <!--1、引入高德地图JavaScript API文件:key=您申请的key值-->
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=a05eaf4c98fdd39755fb9e7767376fd6"></script>
+    <script type="text/javascript">
+    	function getUnixTime(time) {
+    		// body...
+    		var _time = new Date(time);
+    		if (_time ) {
+    			_time = Math.round(_time.getTime()/1000);
+    		}
+    		return _time;
+
+    	}
+
+    </script>
+	<script type="text/javascript">
+		
+		//1、构建访问参数 
+		// 	 请求URI
+		// http://api.map.baidu.com/trace/v2/track/gethistory
+		var 	url = "http://api.map.baidu.com/trace/v2/track/gethistory"+"?mcode=A2:F7:2C:1D:C3:17:68:97:6F:D8:1B:FA:4B:3F:4B:DF:FF:86:9A:BB;com.baidu.trackshow";
+		var requestOption = {					
+						ak : "pP3wmyx5MqVtLoOme9BVLRlTyNaQ5C4b",
+						service_id : "123242",
+						start_time : getUnixTime("2016-08-12 00:00:00"),
+						end_time : getUnixTime("2016-08-12 23:59:59"),
+						entity_name : "myTrace",
+						page_size : 1000,
+						page_index: 1,
+						is_processed: 1,
+						process_option:"need_mapmatch=0",
+						
+					
+		};
+		//2、发送异步请求
+		$.ajax({
+			url:url,
+			data:requestOption,
+			dataType: "jsonp",
+			jsonp:"callback",
+			beforeSend:function(xhr){
+				console.log(xhr);
+			},
+			success:function(data){
+				console.log(data);
+			var count =	Math.ceil( data.total/data.size);//总页数
+			
+			
+			var centerPoint = [(data.end_point.longitude+data.start_point.longitude)/2,
+			(data.end_point.latitude+data.start_point.latitude)/2
+			];
+			createMap(centerPoint,data);
+
+		//3、展示数据到地图
+		 
+		
+			}
+		})
+	var map=null;	
+	var LngLatArr=[];
+function createMap(center,data){
+	    map = new AMap.Map("container",{
+            zoom:15,
+            center:center,//center属性的值可以使经纬度的二元数组，也可以是AMap.LngLat对象，要求经度值在前，纬度值在后
+        });
+		//添加标记点Mark
+var mark = new AMap.Marker({
+    position:center,
+    map:map,
+});
+  LngLatArr =  data.points.map(function(item){
+					return item.location;
+				});
+var opt={
+			map:map,
+			path:LngLatArr,
+			zIndex:50,
+			strokeColor: "#00A",  //线颜色
+			strokeOpacity: 1,     //线透明度
+			strokeWeight: 5,      //线宽
+			strokeStyle: "solid"  //线样式
+	}
+	var polyLine =new AMap.Polyline(opt);
+	  
+	 map.setFitView();
+}
+ 
+
+
+	</script>
+
+</body>
+</html>
