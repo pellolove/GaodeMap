@@ -19,7 +19,8 @@
 	
 <script  type="text/javascript" src="http://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
    <!--1、引入高德地图JavaScript API文件:key=您申请的key值-->
-    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=a05eaf4c98fdd39755fb9e7767376fd6"></script>
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=a05eaf4c98fdd39755fb9e7767376fd6"></script>
+<script type="text/javascript" src="coordinate.js"></script><!--转换坐标系统-->
     <script type="text/javascript">
     	function getUnixTime(time) {
     		// body...
@@ -47,7 +48,7 @@
 						page_size : 1000,
 						page_index: 1,
 						is_processed: 1,
-						process_option:"need_mapmatch=0",
+						process_option:"need_mapmatch=1",
 						
 					
 		};
@@ -88,7 +89,10 @@ var mark = new AMap.Marker({
     map:map,
 });
   LngLatArr =  data.points.map(function(item){
-					return item.location;
+				  	var bdLng = item.location[0];
+				  	var bdLat = item.location[1];
+				  	var ggLngLat = bd_decrypt({lng:bdLng,lat:bdLat});
+					return [ggLngLat.lng,ggLngLat.lat];
 				});
 var opt={
 			map:map,
