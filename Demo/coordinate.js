@@ -1,6 +1,7 @@
 
-var x_pi =  3.14159265358979324;
-
+var pi =  3.14159265358979324;
+var x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+//火星==>百度
 function bd_encrypt(ggLngLat)
 {
     var x = ggLngLat.lng, y = ggLngLat.lat;
@@ -11,7 +12,7 @@ function bd_encrypt(ggLngLat)
 
     return { lng:bd_lng, lat: bd_lat}
 }
- 
+ //百度==>火星
 function bd_decrypt(bdLngLat)
 {
     var x = bdLngLat.lng - 0.0065, y = bdLngLat.lat - 0.006;
