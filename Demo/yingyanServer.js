@@ -17,8 +17,8 @@
 		var requestOption = {					
 						ak : "pP3wmyx5MqVtLoOme9BVLRlTyNaQ5C4b",
 						service_id : "123242",
-						start_time : getUnixTime("2016-08-12 00:00:00"),
-						end_time : getUnixTime("2016-08-12 23:59:59"),
+						start_time : getUnixTime("2016-08-16 00:00:00"),
+						end_time : getUnixTime("2016-08-16 23:59:59"),
 						entity_name : "myTrace",
 						page_size : 1000,
 						page_index: 1,
@@ -32,9 +32,9 @@
 			url:url,
 			data:requestOption,
 			dataType: "jsonp",
-			jsonp:"callback",
+			jsonp:"callback",//为了不编译mocode
 			beforeSend:function(xhr){
-				console.log(xhr);
+				//console.log(xhr);
 			},
 			success:function(data){
 				console.log(data);
